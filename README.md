@@ -1,5 +1,7 @@
 # ERP Dashboard
 
+> **Note:** This repository is used as part of my mentor program.
+
 A full-stack Enterprise Resource Planning (ERP) dashboard built with **Angular** (frontend) and **.NET** (backend), using **SQL Server** as the database.
 
 ---
