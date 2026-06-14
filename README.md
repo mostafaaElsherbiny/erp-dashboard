@@ -2,7 +2,7 @@
 
 > **Note:** This repository is used as part of my mentor program.
 
-A full-stack Enterprise Resource Planning (ERP) dashboard built with **Angular** (frontend) and **.NET** (backend), using **SQL Server** as the database.
+A full-stack Enterprise Resource Planning (ERP) dashboard. This project is **technology-agnostic** — you can implement it using **any backend or frontend stack** of your choice.
 
 ---
 
@@ -12,8 +12,8 @@ A full-stack Enterprise Resource Planning (ERP) dashboard built with **Angular**
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-  - [Backend Setup (.NET)](#backend-setup-net)
-  - [Frontend Setup (Angular)](#frontend-setup-angular)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
 - [CRUD Operations](#crud-operations)
   - [1. Users & Roles](#1-users--roles)
   - [2. Customers](#2-customers)
@@ -29,37 +29,39 @@ A full-stack Enterprise Resource Planning (ERP) dashboard built with **Angular**
 
 ## Tech Stack
 
-| Layer      | Technology                        |
-|------------|-----------------------------------|
-| Frontend   | Angular 17+                       |
-| Backend    | .NET 8 Web API (ASP.NET Core)     |
-| Database   | SQL Server                        |
-| ORM        | Entity Framework Core             |
-| Auth       | JWT Bearer Tokens                 |
-| API Docs   | Swagger / OpenAPI                 |
+This project is **framework-agnostic**. You are free to choose any technology for each layer. Below are popular options for each:
+
+| Layer      | Options (choose any)                                                                 |
+|------------|--------------------------------------------------------------------------------------|
+| Frontend   | Angular, React, Vue, Next.js, Blazor, or any SPA / SSR framework                    |
+| Backend    | .NET (ASP.NET Core), Java (Spring Boot), PHP (Laravel), Python (Django / FastAPI), Node.js (Express / NestJS), or any REST API framework |
+| Database   | SQL Server, PostgreSQL, MySQL, MongoDB, SQLite, or any relational / NoSQL database  |
+| ORM        | Entity Framework, Hibernate, Eloquent, Django ORM, Prisma, TypeORM, etc.            |
+| Auth       | JWT Bearer Tokens (recommended for all stacks)                                      |
+| API Docs   | Swagger / OpenAPI (available for all major frameworks)                              |
 
 ---
 
 ## Project Structure
 
+The recommended folder structure below is a **general guideline**. Adapt it to match your chosen framework's conventions.
+
 ```
 dashboard/
-├── backend/                    # .NET Web API
-│   ├── Controllers/            # API Controllers (one per module)
-│   ├── Models/                 # Entity models
-│   ├── DTOs/                   # Data Transfer Objects
-│   ├── Services/               # Business logic
-│   ├── Data/                   # DbContext & migrations
-│   └── Program.cs
+├── backend/                    # Your backend API (any framework)
+│   ├── controllers/            # API Controllers / Route handlers (one per module)
+│   ├── models/                 # Entity / domain models
+│   ├── dtos/                   # Data Transfer Objects (request & response shapes)
+│   ├── services/               # Business logic layer
+│   ├── repositories/           # Data access layer / ORM queries
+│   └── config/                 # Database & app configuration
 │
-├── frontend/                   # Angular app
+├── frontend/                   # Your frontend app (any framework)
 │   ├── src/
-│   │   ├── app/
-│   │   │   ├── core/           # Guards, interceptors, services
-│   │   │   ├── shared/         # Shared components
-│   │   │   └── modules/        # Feature modules (one per ERP module)
-│   │   └── environments/
-│   └── angular.json
+│   │   ├── core/               # Auth guards, HTTP interceptors, global services
+│   │   ├── shared/             # Reusable UI components
+│   │   └── modules/            # Feature modules (one per ERP module)
+│   └── (framework config files)
 │
 └── README.md
 ```
@@ -68,17 +70,28 @@ dashboard/
 
 ## Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- [Node.js 18+](https://nodejs.org/) and npm
-- [Angular CLI](https://angular.io/cli): `npm install -g @angular/cli`
-- [SQL Server](https://www.microsoft.com/en-us/sql-server) (or SQL Server Express)
-- [SQL Server Management Studio (SSMS)](https://aka.ms/ssms) *(optional)*
+Install the runtime/SDK for your chosen stack. Examples:
+
+**Backend**
+- .NET: [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- Java: [JDK 17+](https://adoptium.net/) + [Maven](https://maven.apache.org/) or Gradle
+- PHP: [PHP 8+](https://www.php.net/) + [Composer](https://getcomposer.org/) (for Laravel)
+- Python: [Python 3.10+](https://www.python.org/) + pip (for Django / FastAPI)
+- Node.js: [Node.js 18+](https://nodejs.org/) (for Express / NestJS)
+
+**Frontend**
+- Angular: [Node.js 18+](https://nodejs.org/) + `npm install -g @angular/cli`
+- React / Vue / Next.js: [Node.js 18+](https://nodejs.org/) + npm or yarn
+- Blazor: [.NET 8 SDK](https://dotnet.microsoft.com/download)
+
+**Database** *(install any one)*
+- [SQL Server](https://www.microsoft.com/en-us/sql-server) / [PostgreSQL](https://www.postgresql.org/) / [MySQL](https://www.mysql.com/) / [MongoDB](https://www.mongodb.com/)
 
 ---
 
 ## Getting Started
 
-### Backend Setup (.NET)
+### Backend Setup
 
 **Step 1 — Clone the repository**
 ```bash
@@ -86,39 +99,53 @@ git clone <repository-url>
 cd dashboard/backend
 ```
 
-**Step 2 — Configure the database connection**
+**Step 2 — Install dependencies**
 
-Open `appsettings.json` and update the connection string:
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER;Database=ERPDashboard;Trusted_Connection=True;TrustServerCertificate=True;"
-  }
-}
-```
+| Framework     | Command                        |
+|---------------|--------------------------------|
+| .NET          | *(restore happens automatically on build)* |
+| Spring Boot   | `mvn install` or `gradle build` |
+| Laravel       | `composer install`              |
+| Django        | `pip install -r requirements.txt` |
+| Express/NestJS| `npm install`                   |
 
-**Step 3 — Apply database migrations**
-```bash
-dotnet ef database update
-```
+**Step 3 — Configure the database connection**
 
-> If migrations don't exist yet, run:
-> ```bash
-> dotnet ef migrations add InitialCreate
-> dotnet ef database update
-> ```
+Update your framework's config file with your database credentials:
 
-**Step 4 — Run the API**
-```bash
-dotnet run
-```
+| Framework     | Config file                    |
+|---------------|--------------------------------|
+| .NET          | `appsettings.json`             |
+| Spring Boot   | `src/main/resources/application.properties` |
+| Laravel       | `.env`                          |
+| Django        | `settings.py`                   |
+| Express/NestJS| `.env`                          |
 
-The API will be available at `https://localhost:5001`
-Swagger UI: `https://localhost:5001/swagger`
+**Step 4 — Run database migrations**
+
+| Framework     | Command                                  |
+|---------------|------------------------------------------|
+| .NET (EF Core)| `dotnet ef database update`              |
+| Spring Boot   | *(auto-runs on start with Hibernate)*    |
+| Laravel       | `php artisan migrate`                    |
+| Django        | `python manage.py migrate`               |
+| TypeORM       | `npm run migration:run`                  |
+
+**Step 5 — Start the API server**
+
+| Framework     | Command                   | Default URL                  |
+|---------------|---------------------------|------------------------------|
+| .NET          | `dotnet run`              | `https://localhost:5001`     |
+| Spring Boot   | `mvn spring-boot:run`     | `http://localhost:8080`      |
+| Laravel       | `php artisan serve`       | `http://localhost:8000`      |
+| Django        | `python manage.py runserver` | `http://localhost:8000`   |
+| NestJS        | `npm run start:dev`       | `http://localhost:3000`      |
+
+Swagger / API docs are typically available at `/swagger` or `/api/docs`.
 
 ---
 
-### Frontend Setup (Angular)
+### Frontend Setup
 
 **Step 1 — Navigate to the frontend folder**
 ```bash
@@ -126,26 +153,34 @@ cd dashboard/frontend
 ```
 
 **Step 2 — Install dependencies**
-```bash
-npm install
-```
+
+| Framework  | Command         |
+|------------|-----------------|
+| Angular    | `npm install`   |
+| React      | `npm install`   |
+| Vue        | `npm install`   |
+| Next.js    | `npm install`   |
+| Blazor     | *(no step needed — .NET handles it)* |
 
 **Step 3 — Configure the API base URL**
 
-Open `src/environments/environment.ts`:
-```typescript
-export const environment = {
-  production: false,
-  apiUrl: 'https://localhost:5001/api'
-};
-```
+Point your frontend to the backend API. Update the relevant config file:
 
-**Step 4 — Run the Angular app**
-```bash
-ng serve
-```
+| Framework  | File                                  | Example                              |
+|------------|---------------------------------------|--------------------------------------|
+| Angular    | `src/environments/environment.ts`     | `apiUrl: 'http://localhost:5001/api'` |
+| React/Next | `.env`                                | `REACT_APP_API_URL=http://localhost:5001/api` |
+| Vue        | `.env`                                | `VITE_API_URL=http://localhost:5001/api` |
 
-The app will be available at `http://localhost:4200`
+**Step 4 — Start the development server**
+
+| Framework  | Command       | Default URL               |
+|------------|---------------|---------------------------|
+| Angular    | `ng serve`    | `http://localhost:4200`   |
+| React (CRA)| `npm start`   | `http://localhost:3000`   |
+| Next.js    | `npm run dev` | `http://localhost:3000`   |
+| Vue (Vite) | `npm run dev` | `http://localhost:5173`   |
+| Blazor     | `dotnet watch`| `https://localhost:5001`  |
 
 ---
 
@@ -158,14 +193,14 @@ The app will be available at `http://localhost:4200`
 
 ### 1. Users & Roles
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Users | `/users` | `UsersListComponent` |
-| Create User | `/users/new` | `UserFormComponent` |
-| Edit User | `/users/:id/edit` | `UserFormComponent` |
-| Delete User | (button in list) | `UsersListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Users | `/users` | Users List Page |
+| Create User | `/users/new` | User Form Page |
+| Edit User | `/users/:id/edit` | User Form Page |
+| Delete User | (button in list) | Users List Page |
 
 **Step-by-step: Create a User**
 1. Navigate to **Settings → Users → New User**.
@@ -217,15 +252,15 @@ Authorization: Bearer <token>
 
 ### 2. Customers
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Customers | `/customers` | `CustomersListComponent` |
-| Create Customer | `/customers/new` | `CustomerFormComponent` |
-| Edit Customer | `/customers/:id/edit` | `CustomerFormComponent` |
-| View Customer | `/customers/:id` | `CustomerDetailComponent` |
-| Delete Customer | (button in list) | `CustomersListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Customers | `/customers` | Customers List Page |
+| Create Customer | `/customers/new` | Customer Form Page |
+| Edit Customer | `/customers/:id/edit` | Customer Form Page |
+| View Customer | `/customers/:id` | Customer Detail Page |
+| Delete Customer | (button in list) | Customers List Page |
 
 **Step-by-step: Create a Customer**
 1. Navigate to **Customers → New Customer**.
@@ -274,15 +309,15 @@ Authorization: Bearer <token>
 
 ### 3. Products / Inventory
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Products | `/products` | `ProductsListComponent` |
-| Create Product | `/products/new` | `ProductFormComponent` |
-| Edit Product | `/products/:id/edit` | `ProductFormComponent` |
-| Stock Adjustment | `/products/:id/stock` | `StockAdjustmentComponent` |
-| Delete Product | (button in list) | `ProductsListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Products | `/products` | Products List Page |
+| Create Product | `/products/new` | Product Form Page |
+| Edit Product | `/products/:id/edit` | Product Form Page |
+| Stock Adjustment | `/products/:id/stock` | Stock Adjustment Page |
+| Delete Product | (button in list) | Products List Page |
 
 **Step-by-step: Create a Product**
 1. Navigate to **Inventory → Products → New Product**.
@@ -333,15 +368,15 @@ Authorization: Bearer <token>
 
 ### 4. Suppliers / Purchasing
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Suppliers | `/suppliers` | `SuppliersListComponent` |
-| Create Supplier | `/suppliers/new` | `SupplierFormComponent` |
-| Edit Supplier | `/suppliers/:id/edit` | `SupplierFormComponent` |
-| Create Purchase Order | `/purchasing/new` | `PurchaseOrderFormComponent` |
-| Delete Supplier | (button in list) | `SuppliersListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Suppliers | `/suppliers` | Suppliers List Page |
+| Create Supplier | `/suppliers/new` | Supplier Form Page |
+| Edit Supplier | `/suppliers/:id/edit` | Supplier Form Page |
+| Create Purchase Order | `/purchasing/new` | Purchase Order Form Page |
+| Delete Supplier | (button in list) | Suppliers List Page |
 
 **Step-by-step: Create a Supplier**
 1. Navigate to **Purchasing → Suppliers → New Supplier**.
@@ -379,15 +414,15 @@ PATCH  /api/purchase-orders/{id}/status — Update order status (Pending/Receive
 
 ### 5. Orders / Sales
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Orders | `/orders` | `OrdersListComponent` |
-| Create Order | `/orders/new` | `OrderFormComponent` |
-| View Order | `/orders/:id` | `OrderDetailComponent` |
-| Edit Order | `/orders/:id/edit` | `OrderFormComponent` |
-| Delete Order | (button in list) | `OrdersListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Orders | `/orders` | Orders List Page |
+| Create Order | `/orders/new` | Order Form Page |
+| View Order | `/orders/:id` | Order Detail Page |
+| Edit Order | `/orders/:id/edit` | Order Form Page |
+| Delete Order | (button in list) | Orders List Page |
 
 **Step-by-step: Create a Sales Order**
 1. Navigate to **Sales → Orders → New Order**.
@@ -440,15 +475,15 @@ Authorization: Bearer <token>
 
 ### 6. Invoices / Finance
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Invoices | `/invoices` | `InvoicesListComponent` |
-| Create Invoice | `/invoices/new` | `InvoiceFormComponent` |
-| View Invoice | `/invoices/:id` | `InvoiceDetailComponent` |
-| Mark as Paid | (button in detail/list) | `InvoiceDetailComponent` |
-| Delete Invoice | (button in list) | `InvoicesListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Invoices | `/invoices` | Invoices List Page |
+| Create Invoice | `/invoices/new` | Invoice Form Page |
+| View Invoice | `/invoices/:id` | Invoice Detail Page |
+| Mark as Paid | (button in detail/list) | Invoice Detail Page |
+| Delete Invoice | (button in list) | Invoices List Page |
 
 **Step-by-step: Create a Manual Invoice**
 1. Navigate to **Finance → Invoices → New Invoice**.
@@ -490,15 +525,15 @@ DELETE /api/invoices/{id}              — Delete invoice (draft only)
 
 ### 7. Employees / HR
 
-#### Angular Steps
+#### Frontend Steps
 
-| Action | Route | Component |
-|--------|-------|-----------|
-| List Employees | `/employees` | `EmployeesListComponent` |
-| Create Employee | `/employees/new` | `EmployeeFormComponent` |
-| Edit Employee | `/employees/:id/edit` | `EmployeeFormComponent` |
-| View Profile | `/employees/:id` | `EmployeeDetailComponent` |
-| Delete Employee | (button in list) | `EmployeesListComponent` |
+| Action | Route | Page / Component |
+|--------|-------|-----------------|
+| List Employees | `/employees` | Employees List Page |
+| Create Employee | `/employees/new` | Employee Form Page |
+| Edit Employee | `/employees/:id/edit` | Employee Form Page |
+| View Profile | `/employees/:id` | Employee Detail Page |
+| Delete Employee | (button in list) | Employees List Page |
 
 **Step-by-step: Create an Employee**
 1. Navigate to **HR → Employees → New Employee**.
@@ -617,4 +652,4 @@ Departments    — id, name
 - All list endpoints support **search** via `?search=keyword`.
 - Soft deletes are used for Customers, Products, and Employees (records are marked as `isDeleted = true` rather than removed).
 - Date fields follow **ISO 8601** format: `YYYY-MM-DD`.
-- Monetary values are in the base currency configured in `appsettings.json` under `"AppSettings:Currency"`.
+- Monetary values are in the base currency configured in your backend's settings file (e.g., `appsettings.json`, `.env`, `settings.py`, etc.).
