@@ -1,8 +1,6 @@
-# ERP Dashboard
+# ERP Dashboard — Level 1
 
-> **Note:** This repository is used as part of my mentor program.
-
-A full-stack Enterprise Resource Planning (ERP) dashboard. This project is **technology-agnostic** — you can implement it using **any backend or frontend stack** of your choice.
+Level 1 establishes the ERP foundation: users and roles, customers, inventory, purchasing, sales, finance, and HR. Use the technology and setup guidance in this file to choose and configure the stack.
 
 ---
 
@@ -10,6 +8,7 @@ A full-stack Enterprise Resource Planning (ERP) dashboard. This project is **tec
 
 - [Project Levels](#project-levels)
 - [Level 2 Guide](LEVEL2.md)
+- [Level 3 Guide](LEVEL3.md)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
@@ -30,14 +29,15 @@ A full-stack Enterprise Resource Planning (ERP) dashboard. This project is **tec
 
 ## Project Levels
 
-This project is divided into two implementation levels. Level 1 is the ERP foundation already described in this document. Level 2 builds on it with project and task management, additional CRUD APIs, and a complete JWT authentication and authorization contract.
+This project is divided into three implementation levels. Level 1 is the ERP foundation described in this document. Level 2 adds project and task management, additional CRUD APIs, and JWT authentication. Level 3 adds reporting, automation, notifications, audit history, and integrations.
 
 | Level | Scope | Completion outcome |
 |-------|-------|--------------------|
 | **Level 1: ERP foundation** | Users and roles, customers, products and inventory, suppliers and purchasing, sales orders, invoices, and employees | Core ERP records can be created, viewed, updated, and deleted through authenticated APIs. |
 | **Level 2: Secure project operations** | [Projects, tasks, task comments, APIs, and JWT authentication](LEVEL2.md) | Users can manage project work through documented APIs, with authorization enforced on every protected operation. |
+| **Level 3: Automation, analytics, and integrations** | [Reports, workflow automation, notifications, audit history, and webhooks](LEVEL3.md) | Business operations are observable, automatable, auditable, and connected through secure integrations. |
 
-Implement Level 1 first, then follow the [Level 2 guide](LEVEL2.md) without breaking existing routes or response contracts. The project remains framework-agnostic.
+Implement each level in order. Follow the [Level 2 guide](LEVEL2.md) and [Level 3 guide](LEVEL3.md) without breaking existing routes or response contracts. The project remains framework-agnostic.
 
 ---
 

@@ -4,6 +4,8 @@ Level 2 extends the ERP foundation in [LEVEL1.md](LEVEL1.md) with project manage
 
 Complete Level 1 first, then add these routes without breaking existing API contracts. Level 1 setup and technology guidance are in [LEVEL1.md](LEVEL1.md).
 
+After Level 2 is stable, continue to [Level 3](LEVEL3.md) for analytics, automation, notifications, audit history, and integrations.
+
 ## Projects
 
 Projects group related work and have an owner, dates, and a lifecycle status. A project cannot be deleted while it has active tasks; archive it or complete/reassign its tasks first.
