@@ -1,8 +1,8 @@
 # ERP Dashboard — Level 2
 
-Level 2 extends the ERP foundation in [README.md](README.md) with project management, task tracking, task discussions, and a complete JWT authentication contract. Choose the same stack as Level 1; the API behavior below is framework-agnostic.
+Level 2 extends the ERP foundation in [LEVEL1.md](LEVEL1.md) with project management, task tracking, task discussions, and a complete JWT authentication contract. Choose the same stack as Level 1; the API behavior below is framework-agnostic.
 
-Complete Level 1 first, then add these routes without breaking existing API contracts. Level 1 setup and technology guidance remain in [README.md](README.md).
+Complete Level 1 first, then add these routes without breaking existing API contracts. Level 1 setup and technology guidance are in [LEVEL1.md](LEVEL1.md).
 
 ## Projects
 
