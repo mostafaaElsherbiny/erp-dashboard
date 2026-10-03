@@ -8,6 +8,8 @@ A full-stack Enterprise Resource Planning (ERP) dashboard. This project is **tec
 
 ## Table of Contents
 
+- [Project Levels](#project-levels)
+- [Level 2 Guide](LEVEL2.md)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
@@ -22,8 +24,20 @@ A full-stack Enterprise Resource Planning (ERP) dashboard. This project is **tec
   - [5. Orders / Sales](#5-orders--sales)
   - [6. Invoices / Finance](#6-invoices--finance)
   - [7. Employees / HR](#7-employees--hr)
-- [API Reference](#api-reference)
 - [Database Schema Overview](#database-schema-overview)
+
+---
+
+## Project Levels
+
+This project is divided into two implementation levels. Level 1 is the ERP foundation already described in this document. Level 2 builds on it with project and task management, additional CRUD APIs, and a complete JWT authentication and authorization contract.
+
+| Level | Scope | Completion outcome |
+|-------|-------|--------------------|
+| **Level 1: ERP foundation** | Users and roles, customers, products and inventory, suppliers and purchasing, sales orders, invoices, and employees | Core ERP records can be created, viewed, updated, and deleted through authenticated APIs. |
+| **Level 2: Secure project operations** | [Projects, tasks, task comments, APIs, and JWT authentication](LEVEL2.md) | Users can manage project work through documented APIs, with authorization enforced on every protected operation. |
+
+Implement Level 1 first, then follow the [Level 2 guide](LEVEL2.md) without breaking existing routes or response contracts. The project remains framework-agnostic.
 
 ---
 
@@ -584,38 +598,7 @@ Authorization: Bearer <token>
 
 ## API Reference
 
-### Authentication
-
-```
-POST /api/auth/login        — Login and obtain JWT token
-POST /api/auth/refresh      — Refresh JWT token
-POST /api/auth/logout       — Logout
-```
-
-**Login Request:**
-```http
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "email": "admin@company.com",
-  "password": "Admin@1234"
-}
-```
-
-**Login Response:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "refreshToken": "dGhpcyBpcy...",
-  "expiresAt": "2026-06-14T10:00:00Z"
-}
-```
-
-Use the `token` value in all subsequent requests:
-```
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
-```
+All Level 1 CRUD endpoints require a JWT bearer access token. The login, refresh, logout, authorization, and response contracts are documented in the [Level 2 guide](LEVEL2.md).
 
 ---
 
@@ -642,6 +625,7 @@ InvoiceLines   — id, invoiceId, description, quantity, unitPrice, taxRate
 
 Employees      — id, firstName, lastName, email, phone, departmentId, position, hireDate, salary
 Departments    — id, name
+
 ```
 
 ---
